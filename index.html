@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>X Auto Publisher</title>
+
+  <style>
+    body{
+      margin:0;
+      background:#0f0f0f;
+      font-family:Arial;
+      color:white;
+      padding:20px;
+    }
+
+    .container{
+      max-width:500px;
+      margin:auto;
+    }
+
+    .card{
+      background:#1a1a1a;
+      padding:20px;
+      border-radius:20px;
+      margin-bottom:20px;
+    }
+
+    h1{
+      text-align:center;
+      margin-bottom:30px;
+    }
+
+    textarea,input{
+      width:100%;
+      padding:15px;
+      border:none;
+      border-radius:12px;
+      margin-top:10px;
+      background:#2a2a2a;
+      color:white;
+      box-sizing:border-box;
+    }
+
+    button{
+      width:100%;
+      padding:15px;
+      border:none;
+      border-radius:12px;
+      background:#7c3aed;
+      color:white;
+      font-size:18px;
+      margin-top:15px;
+      cursor:pointer;
+    }
+
+    .preview{
+      background:#111;
+      padding:15px;
+      border-radius:15px;
+      line-height:2;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>🚀 X Auto Publisher</h1>
+
+  <div class="card">
+
+    <label>محتوى المنشور</label>
+
+    <textarea id="post" rows="6" placeholder="اكتب المحتوى هنا"></textarea>
+
+    <label>رابط (اختياري)</label>
+
+    <input type="text" placeholder="https://example.com">
+
+    <label>رفع الشعار</label>
+
+    <input type="file">
+
+    <button onclick="generatePost()">
+      تحسين المحتوى
+    </button>
+
+  </div>
+
+  <div class="card">
+
+    <h3>معاينة التغريدة</h3>
+
+    <div class="preview" id="preview">
+      سيظهر المحتوى هنا...
+    </div>
+
+    <button>
+      نشر الآن
+    </button>
+
+    <button>
+      جدولة ذكية
+    </button>
+
+  </div>
+
+</div>
+
+<script>
+
+function generatePost(){
+
+  let text = document.getElementById("post").value;
+
+  let finalText = `
+🚨 ${text}
+
+التفاصيل والتقديم 👇
+الرابط
+`;
+
+  document.getElementById("preview").innerText = finalText;
+
+}
+
+</script>
+
+</body>
+</html>
