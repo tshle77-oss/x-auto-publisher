@@ -1,15 +1,22 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>X Auto Publisher</title>
 
   <style>
-    body{
+    *{
       margin:0;
-      background:#0f0f0f;
+      padding:0;
+      box-sizing:border-box;
       font-family:Arial;
+    }
+
+    body{
+      background:#0f0f0f;
       color:white;
       padding:20px;
     }
@@ -19,46 +26,108 @@
       margin:auto;
     }
 
+    .header{
+      text-align:center;
+      margin-bottom:25px;
+    }
+
+    .header h1{
+      font-size:32px;
+      margin-bottom:10px;
+    }
+
+    .header p{
+      color:#999;
+      line-height:1.8;
+    }
+
     .card{
-      background:#1a1a1a;
+      background:#181818;
+      border:1px solid #2a2a2a;
+      border-radius:24px;
       padding:20px;
-      border-radius:20px;
       margin-bottom:20px;
     }
 
-    h1{
-      text-align:center;
-      margin-bottom:30px;
+    .label{
+      margin-bottom:10px;
+      display:block;
+      font-size:15px;
+      color:#ccc;
     }
 
-    textarea,input{
+    textarea,
+    input{
       width:100%;
-      padding:15px;
-      border:none;
-      border-radius:12px;
-      margin-top:10px;
-      background:#2a2a2a;
+      background:#101010;
+      border:1px solid #333;
       color:white;
-      box-sizing:border-box;
+      padding:15px;
+      border-radius:16px;
+      margin-bottom:15px;
+      font-size:16px;
+    }
+
+    textarea{
+      height:180px;
+      resize:none;
+    }
+
+    input[type=file]{
+      padding:12px;
+      background:#111;
     }
 
     button{
       width:100%;
-      padding:15px;
       border:none;
-      border-radius:12px;
+      border-radius:16px;
+      padding:16px;
+      font-size:17px;
+      cursor:pointer;
+      margin-top:10px;
+      transition:.3s;
+    }
+
+    .ai-btn{
       background:#7c3aed;
       color:white;
-      font-size:18px;
-      margin-top:15px;
-      cursor:pointer;
+    }
+
+    .publish-btn{
+      background:#2563eb;
+      color:white;
+    }
+
+    .schedule-btn{
+      background:#16a34a;
+      color:white;
     }
 
     .preview{
-      background:#111;
-      padding:15px;
-      border-radius:15px;
+      background:#101010;
+      border-radius:18px;
+      padding:18px;
       line-height:2;
+      border:1px solid #2a2a2a;
+      color:#eee;
+    }
+
+    .tag{
+      display:inline-block;
+      background:#27272a;
+      color:#aaa;
+      padding:8px 14px;
+      border-radius:100px;
+      margin-bottom:15px;
+      font-size:14px;
+    }
+
+    .footer{
+      text-align:center;
+      color:#666;
+      margin-top:30px;
+      font-size:14px;
     }
   </style>
 </head>
@@ -67,43 +136,74 @@
 
 <div class="container">
 
-  <h1>🚀 X Auto Publisher</h1>
+  <div class="header">
+
+    <h1>🚀 X Auto Publisher</h1>
+
+    <p>
+      أداة ذكية لتحسين وجدولة ونشر المحتوى على منصة X
+    </p>
+
+  </div>
 
   <div class="card">
 
-    <label>محتوى المنشور</label>
+    <div class="tag">
+      AI Powered
+    </div>
 
-    <textarea id="post" rows="6" placeholder="اكتب المحتوى هنا"></textarea>
+    <label class="label">
+      محتوى المنشور
+    </label>
 
-    <label>رابط (اختياري)</label>
+    <textarea id="post"
+      placeholder="اكتب المحتوى الخام هنا..."></textarea>
 
-    <input type="text" placeholder="https://example.com">
+    <label class="label">
+      الرابط (اختياري)
+    </label>
 
-    <label>رفع الشعار</label>
+    <input type="text"
+      placeholder="https://example.com">
+
+    <label class="label">
+      رفع الشعار
+    </label>
 
     <input type="file">
 
-    <button onclick="generatePost()">
-      تحسين المحتوى
+    <button class="ai-btn"
+      onclick="generatePost()">
+      ✨ تحسين المحتوى بالذكاء الاصطناعي
     </button>
 
   </div>
 
   <div class="card">
 
-    <h3>معاينة التغريدة</h3>
+    <label class="label">
+      معاينة التغريدة
+    </label>
 
     <div class="preview" id="preview">
-      سيظهر المحتوى هنا...
+
+      سيظهر المحتوى المحسن هنا...
+
     </div>
 
-    <button>
-      نشر الآن
+    <button class="publish-btn">
+      🚀 نشر الآن
     </button>
 
-    <button>
-      جدولة ذكية
+    <button class="schedule-btn">
+      ⏰ جدولة ذكية
     </button>
+
+  </div>
+
+  <div class="footer">
+
+    Powered By AI
 
   </div>
 
@@ -113,20 +213,25 @@
 
 function generatePost(){
 
-  let text = document.getElementById("post").value;
+  let text =
+    document.getElementById("post").value;
 
   let finalText = `
 🚨 ${text}
 
-التفاصيل والتقديم 👇
+✅ رواتب ومزايا تنافسية
+
+📍 التقديم والتفاصيل:
 الرابط
 `;
 
-  document.getElementById("preview").innerText = finalText;
+  document.getElementById("preview")
+    .innerText = finalText;
 
 }
 
 </script>
 
 </body>
+
 </html>
