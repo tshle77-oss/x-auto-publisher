@@ -103,6 +103,7 @@ white-space:pre-wrap;
 text-align:center;
 color:#999;
 margin-top:15px;
+line-height:1.8;
 }
 
 </style>
@@ -187,6 +188,15 @@ document.getElementById("post").value;
 const link =
 document.getElementById("link").value;
 
+if(!text){
+
+document.getElementById("loading")
+.innerText = "اكتب محتوى أولاً";
+
+return;
+
+}
+
 document.getElementById("loading")
 .innerText = "جاري تحسين المحتوى...";
 
@@ -216,7 +226,7 @@ await fetch(
 method:"POST",
 
 headers:{
-"Content-Type":"application/json",
+"Content-Type":"application/json"
 },
 
 body:JSON.stringify({
@@ -228,6 +238,17 @@ prompt:prompt
 const data =
 await response.json();
 
+console.log(data);
+
+if(data.error){
+
+document.getElementById("loading")
+.innerText = data.error;
+
+return;
+
+}
+
 const result =
 data.choices[0].message.content;
 
@@ -235,12 +256,15 @@ document.getElementById("preview")
 .innerText = result;
 
 document.getElementById("loading")
-.innerText = "";
+.innerText = "تم التحسين بنجاح ✅";
 
 }catch(error){
 
+console.log(error);
+
 document.getElementById("loading")
-.innerText = "حدث خطأ";
+.innerText =
+"فشل الاتصال بالذكاء الاصطناعي";
 
 }
 
