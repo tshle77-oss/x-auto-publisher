@@ -104,6 +104,7 @@ text-align:center;
 color:#999;
 margin-top:15px;
 line-height:1.8;
+word-break:break-word;
 }
 
 </style>
@@ -243,7 +244,18 @@ console.log(data);
 if(data.error){
 
 document.getElementById("loading")
-.innerText = data.error;
+.innerText =
+JSON.stringify(data.error);
+
+return;
+
+}
+
+if(!data.choices){
+
+document.getElementById("loading")
+.innerText =
+"لم يتم العثور على رد من OpenAI";
 
 return;
 
@@ -256,7 +268,8 @@ document.getElementById("preview")
 .innerText = result;
 
 document.getElementById("loading")
-.innerText = "تم التحسين بنجاح ✅";
+.innerText =
+"تم تحسين المحتوى بنجاح ✅";
 
 }catch(error){
 
