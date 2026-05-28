@@ -119,7 +119,23 @@ body:
 const mediaData =
 await mediaResponse.json();
 
-mediaId = mediaData.media_id_string;
+console.log("MEDIA RESPONSE:");
+console.log(mediaData);
+
+if(mediaData.media_id_string){
+
+mediaId =
+mediaData.media_id_string;
+
+}else{
+
+return res.status(400).json({
+success:false,
+step:"media upload",
+mediaData
+});
+
+}
 
 }
 
@@ -186,6 +202,9 @@ body:JSON.stringify(body)
 const data =
 await response.json();
 
+console.log("TWEET RESPONSE:");
+console.log(data);
+
 if(response.ok){
 
 return res.status(200).json({
@@ -197,12 +216,15 @@ data
 
 return res.status(400).json({
 success:false,
+step:"tweet publish",
 data
 });
 
 }
 
 }catch(error){
+
+console.log(error);
 
 return res.status(500).json({
 success:false,
