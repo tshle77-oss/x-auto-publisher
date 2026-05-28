@@ -103,6 +103,7 @@ white-space:pre-wrap;
 text-align:center;
 color:#999;
 margin-top:15px;
+line-height:1.8;
 }
 
 </style>
@@ -136,7 +137,9 @@ placeholder="https://example.com">
 
 <label>رفع الشعار</label>
 
-<input type="file">
+<input
+type="file"
+id="imageInput">
 
 <button
 class="ai"
@@ -220,7 +223,7 @@ await fetch(
 method:"POST",
 
 headers:{
-"Content-Type":"application/json",
+"Content-Type":"application/json"
 },
 
 body:JSON.stringify({
@@ -231,6 +234,16 @@ prompt:prompt
 
 const data =
 await response.json();
+
+if(!data.choices){
+
+document.getElementById("loading")
+.innerText =
+"فشل تحسين المحتوى";
+
+return;
+
+}
 
 const result =
 data.choices[0].message.content;
@@ -246,7 +259,7 @@ document.getElementById("loading")
 
 document.getElementById("loading")
 .innerText =
-"حدث خطأ";
+"حدث خطأ أثناء التحسين";
 
 }
 
@@ -271,6 +284,33 @@ document.getElementById("loading")
 
 try{
 
+const imageFile =
+document.getElementById("imageInput")
+.files[0];
+
+let imageBase64 = null;
+
+if(imageFile){
+
+const reader = new FileReader();
+
+imageBase64 =
+await new Promise((resolve)=>{
+
+reader.onload = () => {
+
+resolve(
+reader.result.split(",")[1]
+);
+
+};
+
+reader.readAsDataURL(imageFile);
+
+});
+
+}
+
 const response =
 await fetch(
 "/api/publish",
@@ -278,17 +318,23 @@ await fetch(
 method:"POST",
 
 headers:{
-"Content-Type":"application/json",
+"Content-Type":"application/json"
 },
 
 body:JSON.stringify({
-text:content
+
+text:content,
+
+image:imageBase64
+
 })
 
 });
 
 const data =
 await response.json();
+
+console.log(data);
 
 if(data.success){
 
