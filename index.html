@@ -103,8 +103,6 @@ white-space:pre-wrap;
 text-align:center;
 color:#999;
 margin-top:15px;
-line-height:1.8;
-word-break:break-word;
 }
 
 </style>
@@ -167,8 +165,12 @@ id="preview">
 
 </div>
 
-<button class="publish">
+<button
+class="publish"
+onclick="publishPost()">
+
 🚀 نشر الآن
+
 </button>
 
 <button class="schedule">
@@ -188,15 +190,6 @@ document.getElementById("post").value;
 
 const link =
 document.getElementById("link").value;
-
-if(!text){
-
-document.getElementById("loading")
-.innerText = "اكتب محتوى أولاً";
-
-return;
-
-}
 
 document.getElementById("loading")
 .innerText = "جاري تحسين المحتوى...";
@@ -227,7 +220,7 @@ await fetch(
 method:"POST",
 
 headers:{
-"Content-Type":"application/json"
+"Content-Type":"application/json",
 },
 
 body:JSON.stringify({
@@ -239,28 +232,6 @@ prompt:prompt
 const data =
 await response.json();
 
-console.log(data);
-
-if(data.error){
-
-document.getElementById("loading")
-.innerText =
-JSON.stringify(data.error);
-
-return;
-
-}
-
-if(!data.choices){
-
-document.getElementById("loading")
-.innerText =
-"لم يتم العثور على رد من OpenAI";
-
-return;
-
-}
-
 const result =
 data.choices[0].message.content;
 
@@ -269,15 +240,75 @@ document.getElementById("preview")
 
 document.getElementById("loading")
 .innerText =
-"تم تحسين المحتوى بنجاح ✅";
+"✅ تم تحسين المحتوى بنجاح";
 
 }catch(error){
 
-console.log(error);
+document.getElementById("loading")
+.innerText =
+"حدث خطأ";
+
+}
+
+}
+
+async function publishPost(){
+
+const content =
+document.getElementById("preview").innerText;
+
+if(
+!content ||
+content.includes("سيظهر المحتوى هنا")
+){
+alert("لا يوجد محتوى للنشر");
+return;
+}
 
 document.getElementById("loading")
 .innerText =
-"فشل الاتصال بالذكاء الاصطناعي";
+"جاري النشر على X...";
+
+try{
+
+const response =
+await fetch(
+"/api/publish",
+{
+method:"POST",
+
+headers:{
+"Content-Type":"application/json",
+},
+
+body:JSON.stringify({
+text:content
+})
+
+});
+
+const data =
+await response.json();
+
+if(data.success){
+
+document.getElementById("loading")
+.innerText =
+"✅ تم النشر بنجاح";
+
+}else{
+
+document.getElementById("loading")
+.innerText =
+"❌ فشل النشر";
+
+}
+
+}catch(error){
+
+document.getElementById("loading")
+.innerText =
+"حدث خطأ أثناء النشر";
 
 }
 
